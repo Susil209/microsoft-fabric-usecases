@@ -9,7 +9,7 @@ Reduce stockouts and excess inventory by forecasting daily demand at store–SKU
 ## Dataset
 
 - Source: Kaggle – Store Sales – Time Series Forecasting (Corporación Favorita) 
-- [text](https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data)
+- [Kaggle – Store Sales](https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data)
 - Granularity: Daily sales by store and product family, with promotions and calendar/holiday data.
 
 ## Fabric components
