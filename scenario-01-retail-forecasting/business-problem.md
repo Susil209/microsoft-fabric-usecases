@@ -1,6 +1,6 @@
 # Business Problem – Retail Demand Forecasting
 
-A grocery retailer wants to reduce stockouts and excess inventory across its stores. They need reliable forecasts of daily demand at store–SKU level so that replenishment, purchasing, and promotions can be planned with data instead of guesswork.
+Right now, your store managers are using last week's Excel report to make today's stocking decisions. That means you're always one step behind. With Microsoft Fabric, we connect your raw daily sales data, run it through a machine learning model trained on your own 3-year history, and deliver a live dashboard every morning at 6 am — before managers even arrive. When a product is predicted to sell out, the system emails the store manager and procurement automatically. No reports to run. No formulas to check. The data works for you.
 
 ## Points to consider
 
