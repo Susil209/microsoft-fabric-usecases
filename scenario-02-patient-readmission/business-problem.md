@@ -33,8 +33,8 @@ From a hospital/health‑system perspective, the solution should:
 
 ### Technical
 
-- 5‑fold cross‑validated AUC‑ROC ≥ 0.65 on the training data and similar performance on hold‑out test data, measured using stratified folds. [file:1]  
-- Robust handling of class imbalance (e.g., via `scale_pos_weight` in XGBoost) and stable performance across folds (low CV AUC standard deviation). [file:1]
+- 5‑fold cross‑validated AUC‑ROC ≥ 0.65 on the training data and similar performance on hold‑out test data, measured using stratified folds. 
+- Robust handling of class imbalance (e.g., via `scale_pos_weight` in XGBoost) and stable performance across folds (low CV AUC standard deviation).
 
 ## How Microsoft Fabric Helps in This Use Case?
 

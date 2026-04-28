@@ -109,3 +109,48 @@ Steps:
   - Applies the same feature logic or reads `silver_features`.  
   - Loads the registered model `HospitalReadmission30d` from MLflow and returns risk scores per patient.
 - Connect a Power BI report to the Lakehouse tables to visualize readmission risk distributions and top risk drivers.
+
+## What changed on 2026-04-28
+
+Three important updates were completed today:
+
+ - Modeling fix: removed the deduplication effect from the modeling workflow and retrained on 101,766 encounters instead of 71,518 deduplicated patient records.
+
+- Training fix: reduced the XGBoost learning rate and expanded training capacity, which increased the best iteration from 32 to 656.
+
+- Scoring fix: replaced fixed risk thresholds with percentile-based thresholds so the HIGH risk bucket is operationally manageable at about 20 percent of patients instead of flagging most patients.
+
+- Warehouse layer: created SQL objects for dimensions, fact tables, aggregates, and a high-risk alert view in the gold layer.
+
+- Current pipeline
+Bronze ingestion – 01-Load_Bronze_Table.ipynb loads raw diabetic_data.csv into bronze_encounters after fixing Delta-incompatible column names.
+
+- Silver cleaning – 02_silver_cleaning.py.ipynb standardizes nulls and types, creates readmitted30d, and originally deduplicated to one encounter per patient. That earlier deduplication is now recognized as the main cause of the April 27 target distortion.
+
+- Feature engineering – 03_feature_engineering.py.ipynb creates diagnosis, utilization, medication, lab, and encoded categorical features in silver_features.
+
+- Model training – 04_ml_experiment.py.ipynb trains and logs the updated XGBoost model in MLflow.
+
+- Risk scoring – 05_risk_scoring.py.ipynb scores all encounters, assigns LOW/MEDIUM/HIGH tiers using percentile thresholds, and writes silverriskscores.
+
+- Gold layer – 06_gold_layer.sql creates warehouse tables and views for Power BI and operational alerting.
+
+## Current model results
+
+- The updated modeling run used 101,766 encounters with 11,357 positive 30-day readmissions, giving a positive rate of about 11.2 percent and a scale_pos_weight of about 8.0.
+
+- The revised XGBoost run achieved CV AUC-ROC of 0.6431 with standard deviation 0.0057, holdout AUC-ROC of 0.6445, average precision of 0.1983, and best iteration 656.
+
+- Although AUC-ROC decreased slightly relative to the earlier baseline, average precision improved sharply because the corrected labeling made the positive class much more meaningful and less distorted by the earlier deduplication choice.
+
+- Current scoring results
+The risk scoring notebook loads the registered model, scores all 101,766 encounters, and writes silverriskscores with riskscorepct, risktier, and actual readmission flags.
+
+- Using percentile-based thresholds, the final tier split is 51,154 LOW patients, 30,455 MEDIUM patients, and 20,157 HIGH patients, or about 50.3 percent, 29.9 percent, and 19.8 percent respectively.
+
+- The HIGH tier captures 4,052 of 11,357 actual 30-day readmissions, for a capture rate of about 36 percent and precision of about 20.1 percent.
+
+- Gold layer outputs
+The gold layer SQL creates dimpatient, dimdiagnosiscategory, factencounters, aggregate tables such as aggreadmitbydiag and aggreadmitbydemographic, and a vwhighriskdischarge view for alerting and monitoring.
+
+This makes the project ready for dashboarding in Power BI, stakeholder reporting, and future operational alert workflows such as Data Activator checks on new HIGH-risk discharges. tion, and feature improvements will be needed before calling the solution production-ready.

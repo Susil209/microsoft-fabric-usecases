@@ -18,7 +18,7 @@ Key characteristics (after silver cleaning):
 
 - Inpatient stays between 1 and 14 days that did not end in hospice or death.
 - Readmission label derived from the original `readmitted` column, focusing on “readmitted within 30 days” vs. “30 or more days / no readmission”.
-- Strong class imbalance: only about 4.5 % of encounters are followed by a 30‑day readmission.
+- Strong class imbalance: only about 4.5 % of encounters are followed by a 30‑day readmission. Fixed to show now 11.2%.
 
 ## Technical Stack
 
@@ -27,12 +27,15 @@ Key characteristics (after silver cleaning):
 - **Compute:** Fabric notebooks using the `synapsepyspark` kernel for PySpark and Python.
 - **ML & tracking:** XGBoost (`XGBClassifier`) and MLflow experiment `HospitalReadmission30Day` with registered model `HospitalReadmission30d`.
 
+
 ## Pipeline Overview
 
 1. **Bronze ingestion** – Load `diabetic_data.csv` from Lakehouse Files into a bronze Delta table, fixing invalid column names.
 2. **Silver cleaning** – Handle missing values, drop unusable columns, cast numeric types, deduplicate to one encounter per patient, and derive a binary `readmitted_30d` label.
 3. **Feature engineering** – Build clinically meaningful features from diagnoses (ICD‑9 groups), lab results (HbA1c, glucose), medication changes, and prior utilization, then encode categoricals and persist `silver_features`.
 4. **Model experiment** – Train an XGBoost classifier with class‑imbalance handling and 5‑fold stratified cross‑validation; log metrics and artifacts to MLflow and register the model.
+5. **Risk scoring** – (`05_risk_scoring.py.ipynb`) scores all encounters, assigns `LOW/MEDIUM/HIGH` tiers using percentile thresholds, and writes silverriskscores.
+6. **Gold layer** – (`06_gold_layer.sql`) creates warehouse tables and views for Power BI and operational alerting.
 
 ## Model Performance (Current Baseline)
 
@@ -56,6 +59,8 @@ Suggested structure for this project:
 - `02_silver_cleaning.py.ipynb` – Silver cleaning.  
 - `03_feature_engineering.py.ipynb` – Feature engineering.
 - `04_ml_experiment.py.ipynb` – ML experiment and MLflow logging.
+- `05_risk_scoring.py.ipynb` - `LOW/MEDIUM/HIGH` tiers threshold
+- `06_gold_layer.sql` - Creates warehouse tables
 
 ## References
 

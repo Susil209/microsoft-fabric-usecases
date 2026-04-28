@@ -52,7 +52,7 @@ A curated list of 31 model features is assembled (e.g., utilization metrics, lab
 
 ### ML & Experimentation Layer
 
-- **Notebook:** `04_ml_experiment.py.ipynb`. [file:1]  
+- **Notebook:** `04_ml_experiment.py.ipynb`.
 - **Input:** `silver_features`.
 - **Features/target:**
   - `X` = selected feature columns (31 engineered features). 
@@ -60,6 +60,21 @@ A curated list of 31 model features is assembled (e.g., utilization metrics, lab
 
 MLflow is configured with experiment name **`HospitalReadmission30Day`**, and all model parameters and metrics are logged under this experiment. 
 A trained XGBoost model is registered as **`HospitalReadmission30d`** via `mlflow.sklearn.log_model`.
+
+### Risk Scoring Layer
+- **Notebook:** `05_risk_scoring.py.ipynb`.
+- **Input:** `silver_features + registered MLflow model`.
+- **Key Steps:**
+  - **Load required libraries**
+  - **Load the registered MLflow model**
+  - **Load engineered features from `silverfeatures`**
+  - **Score every patient using predicted probability** 
+  - **Assign risk tiers**
+  - **Run threshold sensitivity analysis**
+  - **Write scored output to `silverriskscores`**
+
+  
+
 
 ## Logical Flow
 
