@@ -2,11 +2,6 @@
 -- 06_gold_layer.sql
 -- Fabric Warehouse: RetailWarehouse
 -- Scenario 02: Healthcare Patient Readmission Prediction
---
--- IMPORTANT: Use 3-part naming for all Lakehouse references:
---   [LakehouseName].[dbo].[table_name]
---   Replace 'RetailLakehouse' with your actual Lakehouse name.
--- =============================================================
 
 -- STEP A: Dimension tables
 -- =============================================================
