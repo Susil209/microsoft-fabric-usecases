@@ -27,18 +27,6 @@ It contains only numerical input variables which are the result of a PCA transfo
 
 Given the class imbalance ratio, we recommend measuring the accuracy using the Area Under the Precision-Recall Curve (AUPRC). Confusion matrix accuracy is not meaningful for unbalanced classification.
 
-### What is new in Scenario 04
-
-| Feature | Scenarios 1–3 | **Scenario 04** |
-|---------|--------------|----------------|
-| Data motion | Batch CSV | **Streaming (Eventstream)** |
-| Storage | Lakehouse / Warehouse | **+ KQL Database** |
-| Query language | PySpark / T-SQL | **+ KQL (Kusto Query Language)** |
-| Algorithm | Supervised only | **Isolation Forest (unsupervised) + XGBoost** |
-| Alert latency | Hours / daily | **Seconds** |
-| Alert action | Email / Teams | **Teams + automated card block (Power Automate)** |
-| Dashboard refresh | Scheduled | **Sub-second (KQL direct connection)** |
-
 ---
 
 ## Dataset
