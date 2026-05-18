@@ -1,4 +1,4 @@
-# Scenario 04 — Real-Time Financial Fraud Detection
+# Scenario 03 — Real-Time Financial Fraud Detection
 
 **Industry:** Finance / Payments  
 **Dataset:** [Credit Card Fraud Detection — Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) (284,807 transactions, 492 fraud)  
