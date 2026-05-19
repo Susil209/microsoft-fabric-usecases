@@ -1,6 +1,6 @@
 # Business-problem.md
 
-# Scenario 04 — Real-Time Financial Fraud Detection
+# Scenario 03 — Real-Time Financial Fraud Detection
 
 ## Business Problem, Context & Fabric Solution
 
